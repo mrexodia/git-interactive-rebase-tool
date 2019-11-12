@@ -37,6 +37,7 @@ path = "src/main.rs"
 chrono = "0.4"
 clap = "2.32.0"
 unicode-segmentation = "1.1.0"
+cmd_lib = "0.7.8"
 
 [dependencies.pancurses]
 version = "0.16"

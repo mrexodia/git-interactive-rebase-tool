@@ -12,8 +12,7 @@ use crate::process::{
 };
 use crate::view::View;
 use crate::window::Window;
-use std::process::Command;
-use std::process::ExitStatus as ProcessExitStatus;
+use cmd_lib::run_cmd;
 
 enum ExternalEditorState {
 	Active,
@@ -66,26 +65,18 @@ impl<'e> ExternalEditor<'e> {
 	pub fn run_editor(&mut self, git_interactive: &GitInteractive) -> Result<(), String> {
 		git_interactive.write_file()?;
 		let filepath = git_interactive.get_filepath();
-		let callback = || -> Result<ProcessExitStatus, String> {
-			// TODO: This doesn't handle editor with arguments (e.g. EDITOR="edit --arg")
-			Command::new(&self.config.editor)
-				.arg(filepath.as_os_str())
-				.status()
+		let callback = || -> Result<(), String> {
+			run_cmd!("{} \"{}\"", self.config.editor.to_string_lossy(), filepath.as_os_str().to_string_lossy())
 				.map_err(|e| {
 					format!(
-						"Unable to run editor ({}):\n{}",
+						"Unable to run editor ({} \"{}\"):\n{}",
 						self.config.editor.to_string_lossy(),
+						filepath.as_os_str().to_string_lossy(),
 						e.to_string()
 					)
 				})
 		};
-		let exit_status: ProcessExitStatus = Window::leave_temporarily(callback)?;
-
-		if !exit_status.success() {
-			return Err(String::from("Editor returned non-zero exit status."));
-		}
-
-		Ok(())
+		return Window::leave_temporarily(callback);
 	}
 
 	fn process_active(&mut self, git_interactive: &GitInteractive) -> ProcessResult {
