@@ -134,11 +134,12 @@ impl<'w> Window<'w> {
 	}
 
 	fn set_underline(&self, on: bool) {
-		if on {
-			self.window.attron(pancurses::A_UNDERLINE);
-		}
-		else {
-			self.window.attroff(pancurses::A_UNDERLINE);
+		if cfg!(not(windows)) {
+			if on {
+				self.window.attron(pancurses::A_UNDERLINE);
+			} else {
+				self.window.attroff(pancurses::A_UNDERLINE);
+			}
 		}
 	}
 
