@@ -133,7 +133,7 @@ impl Config {
 			diff_change_color: get_color(&git_config, "interactive-rebase-tool.diffChangeColor", Color::Yellow)?,
 			diff_remove_color: get_color(&git_config, "interactive-rebase-tool.diffRemoveColor", Color::Red)?,
 			drop_color: get_color(&git_config, "interactive-rebase-tool.dropColor", Color::Red)?,
-			edit_color: get_color(&git_config, "interactive-rebase-tool.editColor", Color::Blue)?,
+			edit_color: get_color(&git_config, "interactive-rebase-tool.editColor", if cfg!(windows) { Color::White } else { Color::Blue })?,
 			editor: get_os_string(&git_config, "core.editor", editor_from_env())?,
 			error_color: get_color(&git_config, "interactive-rebase-tool.errorColor", Color::Red)?,
 			exec_color: get_color(&git_config, "interactive-rebase-tool.execColor", Color::White)?,
