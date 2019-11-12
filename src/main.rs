@@ -31,6 +31,8 @@ use crate::input::InputHandler;
 use crate::process::{ExitStatus, Process};
 use crate::view::View;
 use crate::window::Window;
+use crate::constants::TITLE;
+use winconsole::console;
 
 struct Exit {
 	message: String,
@@ -38,6 +40,7 @@ struct Exit {
 }
 
 fn main() {
+	console::set_title(TITLE).unwrap();
 	match try_main() {
 		Ok(code) => std::process::exit(code.to_code()),
 		Err(err) => {
