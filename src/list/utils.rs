@@ -48,7 +48,7 @@ pub fn get_action_color(action: Action) -> WindowColor {
 
 pub fn get_normal_footer_full(config: &Config) -> String {
 	format!(
-		" {}, {}, {}/{}, {}/{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
+		" {}, {}, {}/{}, {}/{}, show ({}), down ({}), up ({}), ({})reak, ({})ick, ({})eword, ({})dit, ({})quash, ({})ixup, ({})rop, {}, {}, {}",
 		config.input_move_up,
 		config.input_move_down,
 		config.input_abort,
@@ -73,7 +73,7 @@ pub fn get_normal_footer_full(config: &Config) -> String {
 
 pub fn get_visual_footer_full(config: &Config) -> String {
 	format!(
-		" {}, {}, {}/{}, {}/{}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
+		" {}, {}, {}/{}, {}/{}, down ({}), up ({}), ({})ick, ({})eword, ({})dit, ({})quash, ({})ixup, ({})rop, {}",
 		config.input_move_up,
 		config.input_move_down,
 		config.input_abort,
